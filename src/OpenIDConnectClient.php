@@ -1478,7 +1478,7 @@ class OpenIDConnectClient
 
     public function redirect(string $url) {
         header('Location: ' . $url);
-        exit;
+        return;
     }
 
     public function setHttpProxy(string $httpProxy) {
