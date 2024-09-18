@@ -1440,9 +1440,11 @@ class OpenIDConnectClient
 
         // Close the cURL resource, and free system resources
         curl_close($ch);
-        $output['post_body'] = $post_body;
-        $output['headers'] = $headers;
-        return $output;
+
+        $outputArr = json_decode($output, false);
+        $outputArr['post_body'] = $post_body;
+        $outputArr['headers'] = $headers;
+        return json_encode($output);
     }
 
     /**
