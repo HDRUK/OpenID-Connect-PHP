@@ -298,7 +298,6 @@ class OpenIDConnectClient
      */
     public function authenticate(): bool
     {
-        dd('test dd in authenticate');
         // Do a preemptive check to see if the provider has thrown an error from a previous redirect
         if (isset($_REQUEST['error'])) {
             $desc = isset($_REQUEST['error_description']) ? ' Description: ' . $_REQUEST['error_description'] : '';
@@ -310,6 +309,8 @@ class OpenIDConnectClient
 
             $code = $_REQUEST['code'];
             $token_json = $this->requestTokens($code);
+
+            dd('code ' . $code . ' and token ' . json_encode($token_json) . PHP_EOL);
 
             // Throw an error if the server returns one
             if (isset($token_json->error)) {
