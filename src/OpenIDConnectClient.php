@@ -876,7 +876,7 @@ class OpenIDConnectClient
             'code' => $code,
             'client_id' => $this->clientID,
             'client_secret' => $this->clientSecret,
-            // 'redirect_uri' => $this->getRedirectURL()
+            'redirect_uri' => $this->getRedirectURL()
         ];
 
         $authorizationHeader = null;
@@ -922,12 +922,13 @@ class OpenIDConnectClient
         }
 
         // Convert token params to string format
-        // $token_params = http_build_query($token_params, '', '&', $this->encType);
-        $token_params = http_build_query($token_params, '', null, $this->encType);
+        $token_params = http_build_query($token_params, '', '&', $this->encType);
 
         if (null !== $authorizationHeader) {
             $headers[] = $authorizationHeader;
         }
+        $content_type = 'application/x-www-form-urlencoded';
+        $headers[] = "Content-Type: $content_type";
 
         $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers), false);
         dd('token_params ' . $token_params . ' and token response ' . json_encode($this->tokenResponse));
