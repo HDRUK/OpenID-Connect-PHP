@@ -875,8 +875,7 @@ class OpenIDConnectClient
             'grant_type' => $grant_type,
             'code' => $code,
             'client_id' => $this->clientID,
-            'client_secret' => $this->clientSecret,
-            'redirect_uri' => $this->getRedirectURL()
+            'client_secret' => $this->clientSecret
         ];
 
         $authorizationHeader = null;
