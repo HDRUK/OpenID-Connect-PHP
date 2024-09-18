@@ -1270,7 +1270,7 @@ class OpenIDConnectClient
 
         $response = $this->fetchURL($user_info_endpoint,null,$headers);
         if ($this->getResponseCode() !== 200) {
-            throw new OpenIDConnectClientException('The communication to retrieve user data has failed with status code '.$this->getResponseCode());
+            throw new OpenIDConnectClientException('The communication to retrieve user data has failed with status code '.$this->getResponseCode() . 'and response ' . json_encode($response));
         }
 
         // When we receive application/jwt, the UserInfo Response is signed and/or encrypted.
