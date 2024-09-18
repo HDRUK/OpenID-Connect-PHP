@@ -1363,7 +1363,7 @@ class OpenIDConnectClient
 
         // Determine whether this is a GET or POST
         if ($post_body !== null) {
-            // curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
             // Allows to keep the POST method even after redirect
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_body);
