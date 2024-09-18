@@ -310,6 +310,8 @@ class OpenIDConnectClient
             $code = $_REQUEST['code'];
             $token_json = $this->requestTokens($code);
 
+            dd('token_json ' . $token_json);
+
             // Throw an error if the server returns one
             if (isset($token_json->error)) {
                 if (isset($token_json->error_description)) {
@@ -927,7 +929,7 @@ class OpenIDConnectClient
         }
 
         $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers), false);
-
+        dd('token_params ' . $token_params . ' and token response ' . json_encode($this->tokenResponse));
         return $this->tokenResponse;
     }
 
