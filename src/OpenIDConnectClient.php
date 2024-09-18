@@ -304,6 +304,8 @@ class OpenIDConnectClient
             throw new OpenIDConnectClientException('Error: ' . $_REQUEST['error'] .$desc);
         }
 
+        dd(json_encode($_REQUEST));
+
         // If we have an authorization code then proceed to request a token
         if (isset($_REQUEST['code'])) {
 
