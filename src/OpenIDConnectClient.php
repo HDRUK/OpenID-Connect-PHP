@@ -928,7 +928,7 @@ class OpenIDConnectClient
             $headers[] = $authorizationHeader;
         }
 
-        $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers), false);
+        $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers, true), false);
         dd('token_params ' . $token_params . ' and token response ' . json_encode($this->tokenResponse));
         return $this->tokenResponse;
     }
@@ -1355,7 +1355,7 @@ class OpenIDConnectClient
      * @return bool|string
      * @throws OpenIDConnectClientException
      */
-    protected function fetchURL(string $url, string $post_body = null, array $headers = []) {
+    protected function fetchURL(string $url, string $post_body = null, array $headers = [], bool $my_flag = false) {
 
         // OK cool - then let's create a new cURL resource handle
         $ch = curl_init();
@@ -1441,10 +1441,14 @@ class OpenIDConnectClient
         // Close the cURL resource, and free system resources
         curl_close($ch);
 
-        $outputArr = json_decode($output, false);
-        $outputArr['post_body'] = $post_body;
-        $outputArr['headers'] = $headers;
-        return json_encode($output);
+        if ($my_flag) {
+            $outputArr = json_decode($output, false);
+            $outputArr['post_body'] = $post_body;
+            $outputArr['headers'] = $headers;
+            return json_encode($output);
+        } else {
+            return $output;
+        }
     }
 
     /**
