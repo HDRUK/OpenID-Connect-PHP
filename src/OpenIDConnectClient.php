@@ -304,15 +304,11 @@ class OpenIDConnectClient
             throw new OpenIDConnectClientException('Error: ' . $_REQUEST['error'] .$desc);
         }
 
-        dd(json_encode($_REQUEST));
-
         // If we have an authorization code then proceed to request a token
         if (isset($_REQUEST['code'])) {
 
             $code = $_REQUEST['code'];
             $token_json = $this->requestTokens($code);
-
-            dd('code ' . $code . ' and token ' . json_encode($token_json) . PHP_EOL);
 
             // Throw an error if the server returns one
             if (isset($token_json->error)) {
@@ -323,7 +319,7 @@ class OpenIDConnectClient
             }
 
             // Do an OpenID Connect session check
-	    if (!isset($_REQUEST['state']) || ($_REQUEST['state'] !== $this->getState())) {
+	        if (!isset($_REQUEST['state']) || ($_REQUEST['state'] !== $this->getState())) {
                 throw new OpenIDConnectClientException('Unable to determine state');
             }
 
