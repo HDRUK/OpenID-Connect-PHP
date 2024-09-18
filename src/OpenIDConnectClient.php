@@ -79,12 +79,12 @@ class OpenIDConnectClient
     /**
      * @var string arbitrary id value
      */
-    private $clientID;
+    public $clientID;
 
     /**
      * @var string arbitrary name value
      */
-    private $clientName;
+    public $clientName;
 
     /**
      * @var string arbitrary secret value
@@ -94,164 +94,164 @@ class OpenIDConnectClient
     /**
      * @var array holds the provider configuration
      */
-    private $providerConfig = [];
+    public $providerConfig = [];
 
     /**
      * @var string http proxy if necessary
      */
-    private $httpProxy;
+    public $httpProxy;
 
     /**
      * @var string full system path to the SSL certificate
      */
-    private $certPath;
+    public $certPath;
 
     /**
      * @var bool Verify SSL peer on transactions
      */
-    private $verifyPeer = true;
+    public $verifyPeer = true;
 
     /**
      * @var bool Verify peer hostname on transactions
      */
-    private $verifyHost = true;
+    public $verifyHost = true;
 
     /**
      * @var string if we acquire an access token it will be stored here
      */
-    protected $accessToken;
+    public $accessToken;
 
     /**
      * @var string if we acquire a refresh token it will be stored here
      */
-    private $refreshToken;
+    public $refreshToken;
 
     /**
      * @var string if we acquire an id token it will be stored here
      */
-    protected $idToken;
+    public $idToken;
 
     /**
      * @var object stores the token response
      */
-    private $tokenResponse;
+    public $tokenResponse;
 
     /**
      * @var array holds scopes
      */
-    private $scopes = [];
+    public $scopes = [];
 
     /**
      * @var int|null Response code from the server
      */
-    protected $responseCode;
+    public $responseCode;
 
     /**
      * @var string|null Content type from the server
      */
-    private $responseContentType;
+    public $responseContentType;
 
     /**
      * @var array holds response types
      */
-    private $responseTypes = [];
+    public $responseTypes = [];
 
     /**
      * @var array holds authentication parameters
      */
-    private $authParams = [];
+    public $authParams = [];
 
     /**
      * @var array holds additional registration parameters for example post_logout_redirect_uris
      */
-    private $registrationParams = [];
+    public $registrationParams = [];
 
     /**
      * @var mixed holds well-known openid server properties
      */
-    private $wellKnown = false;
+    public $wellKnown = false;
 
     /**
      * @var mixed holds well-known openid configuration parameters, like policy for MS Azure AD B2C User Flow
      * @see https://docs.microsoft.com/en-us/azure/active-directory-b2c/user-flow-overview 
      */
-    private $wellKnownConfigParameters = [];
+    public $wellKnownConfigParameters = [];
 
     /**
      * @var int timeout (seconds)
      */
-    protected $timeOut = 60;
+    public $timeOut = 60;
 
     /**
      * @var int leeway (seconds)
      */
-    private $leeway = 300;
+    public $leeway = 300;
 
     /**
      * @var array holds response types
      */
-    private $additionalJwks = [];
+    public $additionalJwks = [];
 
     /**
      * @var object holds verified jwt claims
      */
-    protected $verifiedClaims = [];
+    public $verifiedClaims = [];
 
     /**
      * @var callable|null validator function for issuer claim
      */
-    private $issuerValidator;
+    public $issuerValidator;
 
     /**
      * @var callable|null generator function for private key jwt client authentication
      */
-    private $privateKeyJwtGenerator;
+    public $privateKeyJwtGenerator;
 
     /**
      * @var bool Allow OAuth 2 implicit flow; see http://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth
      */
-    private $allowImplicitFlow = false;
+    public $allowImplicitFlow = false;
 
     /**
      * @var string
      */
-    private $redirectURL;
+    public $redirectURL;
 
     /**
      * @var int defines which URL-encoding http_build_query() uses
      */
-    protected $encType = PHP_QUERY_RFC1738;
+    public $encType = PHP_QUERY_RFC1738;
 
     /**
      * @var bool Enable or disable upgrading to HTTPS by paying attention to HTTP header HTTP_UPGRADE_INSECURE_REQUESTS
      */
-    protected $httpUpgradeInsecureRequests = true;
+    public $httpUpgradeInsecureRequests = true;
 
     /**
      * @var string holds code challenge method for PKCE mode
      * @see https://tools.ietf.org/html/rfc7636
      */
-    private $codeChallengeMethod = false;
+    public $codeChallengeMethod = false;
 
     /**
      * @var array holds PKCE supported algorithms
      */
-    private $pkceAlgs = ['S256' => 'sha256', 'plain' => false];
+    public $pkceAlgs = ['S256' => 'sha256', 'plain' => false];
 
     /**
      * @var string if we acquire a sid in back-channel logout it will be stored here
      */
-    private $backChannelSid;
+    public $backChannelSid;
 
     /**
      * @var string if we acquire a sub in back-channel logout it will be stored here
      */
-    private $backChannelSubject;
+    public $backChannelSubject;
 
     /**
      * @var array list of supported auth methods
      */
-    private $token_endpoint_auth_methods_supported = ['client_secret_basic'];
+    public $token_endpoint_auth_methods_supported = ['client_secret_basic'];
 
     /**
      * @param string|null $provider_url optional
