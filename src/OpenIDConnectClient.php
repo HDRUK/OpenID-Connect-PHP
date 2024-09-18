@@ -1371,9 +1371,9 @@ class OpenIDConnectClient
             $content_type = 'application/x-www-form-urlencoded';
 
             // Determine if this is a JSON payload and add the appropriate content type
-            // if (is_object(json_decode($post_body, false))) {
-            //     $content_type = 'application/json';
-            // }
+            if (is_object(json_decode($post_body, false))) {
+                $content_type = 'application/json';
+            }
 
             // Add POST-specific headers
             $headers[] = "Content-Type: $content_type";
@@ -1440,7 +1440,8 @@ class OpenIDConnectClient
 
         // Close the cURL resource, and free system resources
         curl_close($ch);
-
+        $output['post_body'] = $post_body;
+        $output['headers'] = $headers;
         return $output;
     }
 
