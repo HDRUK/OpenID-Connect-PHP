@@ -922,7 +922,7 @@ class OpenIDConnectClient
         }
 
         // Convert token params to string format
-        $token_params = http_build_query($token_params, '', ';', $this->encType);
+        $token_params = http_build_query($token_params, '', '&', $this->encType);
 
         if (null !== $authorizationHeader) {
             $headers[] = $authorizationHeader;
@@ -1445,7 +1445,7 @@ class OpenIDConnectClient
             $outputArr = json_decode($output, false);
             $outputArr['post_body'] = $post_body;
             $outputArr['headers'] = $headers;
-            return json_encode($output);
+            return json_encode($outputArr);
         } else {
             return $output;
         }
