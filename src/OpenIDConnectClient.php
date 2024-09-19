@@ -925,6 +925,7 @@ class OpenIDConnectClient
         if (null !== $authorizationHeader) {
             $headers[] = $authorizationHeader;
         }
+        $headers[] = 'Accept: */*';
 
         $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers), false);
 
@@ -1376,6 +1377,7 @@ class OpenIDConnectClient
 
             // Add POST-specific headers
             $headers[] = "Content-Type: $content_type";
+            $headers[] = 'Content-Length: ' . strlen($post_body);
         }
 
         // Set the User-Agent
