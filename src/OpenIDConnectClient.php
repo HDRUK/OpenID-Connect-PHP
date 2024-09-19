@@ -1363,6 +1363,8 @@ class OpenIDConnectClient
         // OK cool - then let's create a new cURL resource handle
         $ch = curl_init();
 
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+
         // Determine whether this is a GET or POST
         if ($post_body !== null) {
             // curl_setopt($ch, CURLOPT_POST, 1);
