@@ -875,7 +875,8 @@ class OpenIDConnectClient
             'grant_type' => $grant_type,
             'code' => $code,
             'client_id' => $this->clientID,
-            'client_secret' => $this->clientSecret
+            'client_secret' => $this->clientSecret,
+            'redirect_uri' => $this->getRedirectURL()
         ];
 
         $authorizationHeader = null;
@@ -1364,7 +1365,7 @@ class OpenIDConnectClient
         if ($post_body !== null) {
             curl_setopt($ch, CURLOPT_POST, 1);
             // Allows to keep the POST method even after redirect
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_body);
 
             // Default content type is form encoded
