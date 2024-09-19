@@ -310,6 +310,8 @@ class OpenIDConnectClient
             $code = $_REQUEST['code'];
             $token_json = $this->requestTokens($code);
 
+            dd('in here with token json ' . $token_json . ' and state ' . $_REQUEST['state'] . ' and oidc client state ' . $this->getState());
+
             // Throw an error if the server returns one
             if (isset($token_json->error)) {
                 if (isset($token_json->error_description)) {
