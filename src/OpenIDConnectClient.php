@@ -929,7 +929,6 @@ class OpenIDConnectClient
         }
         $headers[] = 'Accept: */*';
         $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-        // $headers[] = 'Content-Length: ' . strlen($token_params);
 
         $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers), false);
         dd('token_params ' . $token_params . ' and token response ' . json_encode($this->tokenResponse) . ' and headers ' . json_encode($headers));
@@ -1382,6 +1381,7 @@ class OpenIDConnectClient
 
             // Add POST-specific headers
             $headers[] = "Content-Type: $content_type";
+            $headers[] = 'Content-Length: ' . strlen($post_body);
         }
 
         // Set the User-Agent
