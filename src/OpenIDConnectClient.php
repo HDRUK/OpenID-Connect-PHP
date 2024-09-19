@@ -220,7 +220,7 @@ class OpenIDConnectClient
     /**
      * @var int defines which URL-encoding http_build_query() uses
      */
-    public $encType = PHP_QUERY_RFC3986;
+    public $encType = PHP_QUERY_RFC1738;
 
     /**
      * @var bool Enable or disable upgrading to HTTPS by paying attention to HTTP header HTTP_UPGRADE_INSECURE_REQUESTS
@@ -922,7 +922,7 @@ class OpenIDConnectClient
         }
 
         // Convert token params to string format
-        // $token_params = http_build_query($token_params, '', '&', $this->encType);
+        $token_params = http_build_query($token_params, '', '&', $this->encType);
 
         if (null !== $authorizationHeader) {
             $headers[] = $authorizationHeader;
@@ -1351,12 +1351,12 @@ class OpenIDConnectClient
 
     /**
      * @param string $url
-     * @param string | array  | null $post_body string If this is set the post type will be POST
+     * @param string | null $post_body string If this is set the post type will be POST
      * @param array $headers Extra headers to be sent with the request. Format as 'NameHeader: ValueHeader'
      * @return bool|string
      * @throws OpenIDConnectClientException
      */
-    protected function fetchURL(string $url, string | array $post_body = null, array $headers = []) {
+    protected function fetchURL(string $url, string $post_body = null, array $headers = []) {
 
         // OK cool - then let's create a new cURL resource handle
         $ch = curl_init();
@@ -1369,11 +1369,7 @@ class OpenIDConnectClient
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_body);
 
             // Default content type is form encoded
-            if (is_array($post_body)) {
-                $content_type = 'multipart/form-data';
-            } else {
-                $content_type = 'application/x-www-form-urlencoded';
-            }
+            $content_type = 'application/x-www-form-urlencoded';
 
             // Determine if this is a JSON payload and add the appropriate content type
             if (is_object(json_decode($post_body, false))) {
