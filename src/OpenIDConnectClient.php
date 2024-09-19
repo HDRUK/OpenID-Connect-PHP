@@ -220,7 +220,7 @@ class OpenIDConnectClient
     /**
      * @var int defines which URL-encoding http_build_query() uses
      */
-    public $encType = PHP_QUERY_RFC1738;
+    public $encType = PHP_QUERY_RFC3986;
 
     /**
      * @var bool Enable or disable upgrading to HTTPS by paying attention to HTTP header HTTP_UPGRADE_INSECURE_REQUESTS
