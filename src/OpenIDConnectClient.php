@@ -928,9 +928,10 @@ class OpenIDConnectClient
             $headers[] = $authorizationHeader;
         }
         $headers[] = 'Accept: */*';
+        $headers[] = 'Content-Type: application/x-www-form-urlencoded';
 
         $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers), false);
-        dd('token_params ' . $token_params . ' and token response ' . json_encode($this->tokenResponse));
+        dd('token_params ' . $token_params . ' and token response ' . json_encode($this->tokenResponse) . ' and headers ' . $headers);
         return $this->tokenResponse;
     }
 
