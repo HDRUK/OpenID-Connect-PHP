@@ -876,7 +876,7 @@ class OpenIDConnectClient
             'code' => $code,
             'client_id' => $this->clientID,
             'client_secret' => $this->clientSecret,
-            'redirect_uri' => url_encode($this->getRedirectURL())
+            'redirect_uri' => urlencode($this->getRedirectURL())
         ];
 
         $authorizationHeader = null;
