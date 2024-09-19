@@ -929,7 +929,7 @@ class OpenIDConnectClient
         }
         $headers[] = 'Accept: */*';
         $headers[] = 'Content-Type: application/x-www-form-urlencoded';
-        $headers[] = 'Content-Length: ' . strlen($token_params);
+        // $headers[] = 'Content-Length: ' . strlen($token_params);
 
         $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers), false);
         dd('token_params ' . $token_params . ' and token response ' . json_encode($this->tokenResponse) . ' and headers ' . json_encode($headers));
@@ -1363,7 +1363,7 @@ class OpenIDConnectClient
         // OK cool - then let's create a new cURL resource handle
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        // curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 
         // Determine whether this is a GET or POST
         if ($post_body !== null) {
