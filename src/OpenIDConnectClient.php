@@ -1369,8 +1369,11 @@ class OpenIDConnectClient
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_body);
 
             // Default content type is form encoded
-            // $content_type = 'application/x-www-form-urlencoded';
-            $content_type = 'multipart/form-data';
+            if (is_array($post_body)) {
+                $content_type = 'multipart/form-data';
+            } else {
+                $content_type = 'application/x-www-form-urlencoded';
+            }
 
             // Determine if this is a JSON payload and add the appropriate content type
             if (is_object(json_decode($post_body, false))) {
