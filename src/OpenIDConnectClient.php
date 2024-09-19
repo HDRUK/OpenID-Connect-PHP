@@ -3,7 +3,7 @@
  *
  * Copyright MITRE 2020
  *
- * OpenIDConnectClient for PHP5
+ * OpenIDConnectClient for PHP7+
  * Author: Michael Jett <mjett@mitre.org>
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
@@ -25,7 +25,6 @@ namespace Jumbojett;
 
 use Error;
 use Exception;
-use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Crypt\RSA;
 use phpseclib3\Math\BigInteger;
 use stdClass;
@@ -80,12 +79,12 @@ class OpenIDConnectClient
     /**
      * @var string arbitrary id value
      */
-    private $clientID;
+    public $clientID;
 
     /**
      * @var string arbitrary name value
      */
-    private $clientName;
+    public $clientName;
 
     /**
      * @var string arbitrary secret value
@@ -95,164 +94,164 @@ class OpenIDConnectClient
     /**
      * @var array holds the provider configuration
      */
-    private $providerConfig = [];
+    public $providerConfig = [];
 
     /**
      * @var string http proxy if necessary
      */
-    private $httpProxy;
+    public $httpProxy;
 
     /**
      * @var string full system path to the SSL certificate
      */
-    private $certPath;
+    public $certPath;
 
     /**
      * @var bool Verify SSL peer on transactions
      */
-    private $verifyPeer = true;
+    public $verifyPeer = true;
 
     /**
      * @var bool Verify peer hostname on transactions
      */
-    private $verifyHost = true;
+    public $verifyHost = true;
 
     /**
      * @var string if we acquire an access token it will be stored here
      */
-    protected $accessToken;
+    public $accessToken;
 
     /**
      * @var string if we acquire a refresh token it will be stored here
      */
-    private $refreshToken;
+    public $refreshToken;
 
     /**
      * @var string if we acquire an id token it will be stored here
      */
-    protected $idToken;
+    public $idToken;
 
     /**
      * @var object stores the token response
      */
-    private $tokenResponse;
+    public $tokenResponse;
 
     /**
      * @var array holds scopes
      */
-    private $scopes = [];
+    public $scopes = [];
 
     /**
      * @var int|null Response code from the server
      */
-    private $responseCode;
+    public $responseCode;
 
     /**
      * @var string|null Content type from the server
      */
-    private $responseContentType;
+    public $responseContentType;
 
     /**
      * @var array holds response types
      */
-    private $responseTypes = [];
+    public $responseTypes = [];
 
     /**
      * @var array holds authentication parameters
      */
-    private $authParams = [];
+    public $authParams = [];
 
     /**
      * @var array holds additional registration parameters for example post_logout_redirect_uris
      */
-    private $registrationParams = [];
+    public $registrationParams = [];
 
     /**
      * @var mixed holds well-known openid server properties
      */
-    private $wellKnown = false;
+    public $wellKnown = false;
 
     /**
      * @var mixed holds well-known openid configuration parameters, like policy for MS Azure AD B2C User Flow
      * @see https://docs.microsoft.com/en-us/azure/active-directory-b2c/user-flow-overview 
      */
-    private $wellKnownConfigParameters = [];
+    public $wellKnownConfigParameters = [];
 
     /**
      * @var int timeout (seconds)
      */
-    protected $timeOut = 60;
+    public $timeOut = 60;
 
     /**
      * @var int leeway (seconds)
      */
-    private $leeway = 300;
+    public $leeway = 300;
 
     /**
      * @var array holds response types
      */
-    private $additionalJwks = [];
+    public $additionalJwks = [];
 
     /**
      * @var object holds verified jwt claims
      */
-    protected $verifiedClaims = [];
+    public $verifiedClaims = [];
 
     /**
      * @var callable|null validator function for issuer claim
      */
-    private $issuerValidator;
+    public $issuerValidator;
 
     /**
      * @var callable|null generator function for private key jwt client authentication
      */
-    private $privateKeyJwtGenerator;
+    public $privateKeyJwtGenerator;
 
     /**
      * @var bool Allow OAuth 2 implicit flow; see http://openid.net/specs/openid-connect-core-1_0.html#ImplicitFlowAuth
      */
-    private $allowImplicitFlow = false;
+    public $allowImplicitFlow = false;
 
     /**
      * @var string
      */
-    private $redirectURL;
+    public $redirectURL;
 
     /**
      * @var int defines which URL-encoding http_build_query() uses
      */
-    protected $encType = PHP_QUERY_RFC1738;
+    public $encType = PHP_QUERY_RFC1738;
 
     /**
      * @var bool Enable or disable upgrading to HTTPS by paying attention to HTTP header HTTP_UPGRADE_INSECURE_REQUESTS
      */
-    protected $httpUpgradeInsecureRequests = true;
+    public $httpUpgradeInsecureRequests = true;
 
     /**
      * @var string holds code challenge method for PKCE mode
      * @see https://tools.ietf.org/html/rfc7636
      */
-    private $codeChallengeMethod = false;
+    public $codeChallengeMethod = false;
 
     /**
      * @var array holds PKCE supported algorithms
      */
-    private $pkceAlgs = ['S256' => 'sha256', 'plain' => false];
+    public $pkceAlgs = ['S256' => 'sha256', 'plain' => false];
 
     /**
      * @var string if we acquire a sid in back-channel logout it will be stored here
      */
-    private $backChannelSid;
+    public $backChannelSid;
 
     /**
      * @var string if we acquire a sub in back-channel logout it will be stored here
      */
-    private $backChannelSubject;
+    public $backChannelSubject;
 
     /**
      * @var array list of supported auth methods
      */
-    private $token_endpoint_auth_methods_supported = ['client_secret_basic'];
+    public $token_endpoint_auth_methods_supported = ['client_secret_basic'];
 
     /**
      * @param string|null $provider_url optional
@@ -320,7 +319,7 @@ class OpenIDConnectClient
             }
 
             // Do an OpenID Connect session check
-	    if (!isset($_REQUEST['state']) || ($_REQUEST['state'] !== $this->getState())) {
+	        if (!isset($_REQUEST['state']) || ($_REQUEST['state'] !== $this->getState())) {
                 throw new OpenIDConnectClientException('Unable to determine state');
             }
 
@@ -380,7 +379,7 @@ class OpenIDConnectClient
             $accessToken = $_REQUEST['access_token'] ?? null;
 
             // Do an OpenID Connect session check
-	    if (!isset($_REQUEST['state']) || ($_REQUEST['state'] !== $this->getState())) {            
+    	    if (!isset($_REQUEST['state']) || ($_REQUEST['state'] !== $this->getState())) {
                 throw new OpenIDConnectClientException('Unable to determine state');
             }
 
@@ -691,6 +690,7 @@ class OpenIDConnectClient
         if (isset($_SERVER['HTTP_X_FORWARDED_PORT'])) {
             $port = (int)$_SERVER['HTTP_X_FORWARDED_PORT'];
         } elseif (isset($_SERVER['SERVER_PORT'])) {
+            # keep this case - even if some tool claim it is unnecessary
             $port = (int)$_SERVER['SERVER_PORT'];
         } elseif ($protocol === 'https') {
             $port = 443;
@@ -872,9 +872,9 @@ class OpenIDConnectClient
         $token_params = [
             'grant_type' => $grant_type,
             'code' => $code,
-            'redirect_uri' => $this->getRedirectURL(),
             'client_id' => $this->clientID,
-            'client_secret' => $this->clientSecret
+            'client_secret' => $this->clientSecret,
+            'redirect_uri' => urlencode($this->getRedirectURL())
         ];
 
         $authorizationHeader = null;
@@ -925,9 +925,10 @@ class OpenIDConnectClient
         if (null !== $authorizationHeader) {
             $headers[] = $authorizationHeader;
         }
+        $headers[] = 'Accept: */*';
+        $headers[] = 'Content-Type: application/x-www-form-urlencoded';
 
         $this->tokenResponse = json_decode($this->fetchURL($token_endpoint, $token_params, $headers), false);
-
         return $this->tokenResponse;
     }
 
@@ -1221,12 +1222,11 @@ class OpenIDConnectClient
     /**
      * @param string $jwt encoded JWT
      * @param int $section the section we would like to decode
-     * @return object
+     * @return object|string|null
      */
-    protected function decodeJWT(string $jwt, int $section = 0): stdClass {
-
+    protected function decodeJWT(string $jwt, int $section = 0) {
         $parts = explode('.', $jwt);
-        return json_decode(base64url_decode($parts[$section]), false);
+        return json_decode(base64url_decode($parts[$section] ?? ''), false);
     }
 
     /**
@@ -1271,7 +1271,7 @@ class OpenIDConnectClient
 
         $response = $this->fetchURL($user_info_endpoint,null,$headers);
         if ($this->getResponseCode() !== 200) {
-            throw new OpenIDConnectClientException('The communication to retrieve user data has failed with status code '.$this->getResponseCode());
+            throw new OpenIDConnectClientException('The communication to retrieve user data has failed with status code '.$this->getResponseCode() . 'and response ' . json_encode($response));
         }
 
         // When we receive application/jwt, the UserInfo Response is signed and/or encrypted.
@@ -1359,6 +1359,8 @@ class OpenIDConnectClient
         // OK cool - then let's create a new cURL resource handle
         $ch = curl_init();
 
+        // curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+
         // Determine whether this is a GET or POST
         if ($post_body !== null) {
             // curl_setopt($ch, CURLOPT_POST, 1);
@@ -1376,6 +1378,7 @@ class OpenIDConnectClient
 
             // Add POST-specific headers
             $headers[] = "Content-Type: $content_type";
+            $headers[] = 'Content-Length: ' . strlen($post_body);
         }
 
         // Set the User-Agent
@@ -1688,7 +1691,10 @@ class OpenIDConnectClient
         return json_decode($this->fetchURL($revocation_endpoint, $post_params, $headers), false);
     }
 
-    public function getClientName(): string
+    /**
+     * @return string|null
+     */
+    public function getClientName()
     {
         return $this->clientName;
     }
@@ -1698,14 +1704,14 @@ class OpenIDConnectClient
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getClientID() {
         return $this->clientID;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getClientSecret() {
         return $this->clientSecret;
@@ -1720,17 +1726,30 @@ class OpenIDConnectClient
         $this->accessToken = $accessToken;
     }
 
-    public function getAccessToken(): string
+    /**
+     * @return string|null
+     */
+    public function getAccessToken()
     {
         return $this->accessToken;
     }
 
-    public function getRefreshToken(): string
+    /**
+     * @return string|null
+     */
+    public function getRefreshToken()
     {
         return $this->refreshToken;
     }
 
-    public function getIdToken(): string
+    public function setIdToken(string $idToken) {
+        $this->idToken = $idToken;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIdToken()
     {
         return $this->idToken;
     }
@@ -1743,21 +1762,21 @@ class OpenIDConnectClient
     }
 
     /**
-     * @return object
+     * @return object|string|null
      */
     public function getAccessTokenPayload() {
         return $this->decodeJWT($this->accessToken, 1);
     }
 
     /**
-     * @return object
+     * @return object|string|null
      */
     public function getIdTokenHeader() {
         return $this->decodeJWT($this->idToken);
     }
 
     /**
-     * @return object
+     * @return object|string|null
      */
     public function getIdTokenPayload() {
         return $this->decodeJWT($this->idToken, 1);
